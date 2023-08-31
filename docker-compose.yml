@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  db:
+    container_name: postgres_container
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: users
+      PGDATA: /data/postgres
+    volumes:
+      - ./postgres-db:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: always
+  server:
+    container_name: server_container
+    build: ./server
+    volumes:
+      - ./server:/api
+      - ./server/controllers:/api/controllers
+      - ./server/db:/api/db
+      - ./server/dtos:/api/dtos
+      - ./server/exceptions:/api/exceptions
+      - ./server/middlewares:/api/middlewares
+      - ./server/router:/api/router
+      - ./server/service:/api/service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  # client:
+  #   container_name: client_container
+  #   build: ./client
+  #   volumes:
+  #     - ./client:/app
+  #     - ./client/public:/app/public
+  #     - ./client/src:/app/src
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - server
