@@ -23,7 +23,7 @@ class UserService {
         const userDto = new UserDto(user.rows[0]);
         const tokens = tokenService.generateTokens({...userDto});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
-        return {...tokens};
+        return {...tokens, user: userDto};
     }
 
     async logout(refreshToken) {
@@ -41,8 +41,8 @@ class UserService {
             throw ApiError.UnauthorizedError();
         }
         const user = await db.query(`SELECT * FROM userdata WHERE username = $1;`,
-                [username]);
-        const userDto = new UserDto(user);
+                [userData.username]);
+        const userDto = new UserDto(user.rows[0]);
         const tokens = tokenService.generateTokens({...userDto});
 
         await tokenService.saveToken(userDto.id, tokens.refreshToken);

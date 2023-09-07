@@ -10,6 +10,6 @@ export default class AuthService {
     }
 
     static async checkAuth() {
-        return await axiosInstance.get('/');
+        return await axiosInstance.get('/check-auth');
     }
 }

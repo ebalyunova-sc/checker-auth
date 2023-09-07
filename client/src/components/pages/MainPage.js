@@ -1,23 +1,53 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import LoginContext from '../../contexts/LoginContext';
-import UserContext from '../../contexts/UserContext';
-import AuthService from '../../services/AuthService';
+import { Context } from '../../App';
 
 const MainPage = () => {
-    let [isLogin, setIsLogin] = useContext(LoginContext);
-    let [user, setuser] = useContext(UserContext);
+    const navigate = useNavigate();
+    const {store} = useContext(Context);
 
-    const handleClick = async (event) => {
-        const response = await AuthService.logout();
-        localStorage.removeItem('token');
-        setIsLogin(false);
+    useEffect(() => {
+        store.checkAuth();
+        if (!localStorage.getItem('auth'))
+        {
+            navigate('/login');
+        }
+    }, [localStorage.getItem('auth')]);
+
+    const handleOnClick = async (event) => {
+        await store.logout();
+        try {
+            navigate('/login');
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    const goToGamePage = () => {
+        if (localStorage.getItem('auth'))
+        {
+            try {
+                navigate('/game');
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        else
+        {
+            try {
+                navigate('/login');
+            } catch (e) {
+                console.log(e);
+            }
+        }
     }
 
     return(
         <>
-        <>{user}</>
-        <button onClick={handleClick}>Выйти</button>
+        <>{localStorage.getItem('user')}</>
+        <button onClick={handleOnClick}>Выйти</button>
+        <button onClick={goToGamePage}>начать игру</button>
         </>
     );
 }

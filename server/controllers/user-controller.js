@@ -36,7 +36,10 @@ class UserController {
 
     async isLogin(req, res, next) {
         try {
-            return res.json(true);
+            return res.json({
+                auth: true,
+                user: req.user.username,
+            });
         } catch (e) {
             next(e);
         }

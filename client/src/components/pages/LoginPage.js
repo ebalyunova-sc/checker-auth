@@ -1,58 +1,70 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import LoginContext from '../../contexts/LoginContext';
-import UserContext from '../../contexts/UserContext';
-import AuthService from '../../services/AuthService';
+import { Context } from '../../App';
+
+import '../style/login&registrationPages.css';
 
 const LoginPage = () => {
-    let [isLogin, setIsLogin] = useContext(LoginContext);
-    let [user, setuser] = useContext(UserContext);
+    const navigate = useNavigate();
+    const {store} = useContext(Context);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [info, setInfo] = useState('');
 
     useEffect(() => {
-        if (localStorage.getItem('token'))
+        store.checkAuth();
+        if (localStorage.getItem('auth') 
+            && localStorage.getItem('user')
+            && localStorage.getItem('token'))
         {
-            setIsLogin(true);
+            navigate('/');
         }
-    });
+    }, [localStorage.getItem('auth')]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        try {
-            const response = await AuthService.login(username, password);
-            localStorage.setItem('token', response.data.accessToken);
-            setIsLogin(true);
-            setuser(username);
-        } catch (e) {
-            setInfo('Invalid username or password');
-        }
+
+        await store.login(username, password);
+        localStorage.getItem('auth') 
+            ? navigate('/')
+            : setInfo('Invalid username or password');
     }
     
     return(
         <>
+            <div className='environment' />
             <form
-                onSubmit = {handleSubmit}>
-                <div>Login</div>
+                onSubmit = {handleSubmit}
+                className='login modalWindow'>
+                <div className='loginText'>Login</div>
                 <input
                     onChange={(event) => setUsername(event.target.value)}
-                    type="text"
-                    placeholder="Username"
+                    type='text'
+                    placeholder='Username'
+                    className='input'
                 />
                 <input
                     onChange={(event) => setPassword(event.target.value)}
-                    type="password"
-                    placeholder="Password"
+                    type='password'
+                    placeholder='Password'
+                    className='input'
                 />
                 <div className='info'>{info}</div>
                 <input
-                    type="submit"
-                    value="SIGN IN"
-                    
+                    type='submit'
+                    value='SIGN IN'
+                    className='submit'
                 />
+                <div className='registrationLink'>
+                    {'Don\'t have an account? '}
+                    <a
+                        href='/registration'
+                        className='link'>
+                        Sign up
+                    </a>
+                </div>
             </form>
-            <div>{isLogin ? 'login' : 'isnt login'}</div>
         </>
     )
 }

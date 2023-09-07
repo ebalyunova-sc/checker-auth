@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { createContext } from 'react';
+import {BrowserRouter , Routes, Route } from 'react-router-dom';
 
-import LoginContext from './contexts/LoginContext';
-import UserContext from './contexts/UserContext';
-import LoginPage from './components/pages/LoginPage';
+import Store from './store/store';
 import MainPage from './components/pages/MainPage';
+import GamePage from './components/pages/GamePage';
+import LoginPage from './components/pages/LoginPage';
+
+export const store = new Store();
+export const Context = createContext({
+    store
+})
 
 const App = () => {
-    const [isLogin, setIsLogin] = useState(false);
-    const [user, setUser] = useState('');
-
     return(
-        <LoginContext.Provider value={[isLogin, setIsLogin]}>
-            <UserContext.Provider value={[user, setUser]}>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={isLogin ? <MainPage /> : <LoginPage />} />
-                    </Routes>
-                </BrowserRouter>
-            </UserContext.Provider>
-        </LoginContext.Provider>
+        <Context.Provider value={{
+            store
+        }}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path='/' element={<MainPage />} />
+                    <Route path='/game' element={<GamePage />} />
+                    <Route path='/login' element={<LoginPage />} />
+                </Routes>
+            </BrowserRouter>
+        </Context.Provider>
     )
 }
 
