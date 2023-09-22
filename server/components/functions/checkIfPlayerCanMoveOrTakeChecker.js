@@ -1,4 +1,4 @@
-const Player = require('../Classes/Player');
+const Player = require('../classes/Player');
 const {playerCanTakeEnemyCheckers} = require('./checkIfPlayerCanTakeCheckers');
 const {checkIfCellIsEmpty} = require('./checkIfCellIsEmpty');
 

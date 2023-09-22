@@ -1,4 +1,4 @@
-const Player = require('../Classes/Player');
+const Player = require('../classes/Player');
 
 addCheckersToPlayers = (whitePlayer, blackPlayer) => {
     for (let i = 1; i < 4; i++) {

@@ -1,4 +1,4 @@
-const Player = require('../Classes/Player');
+const Player = require('../classes/Player');
 const {checkerCanTakeEnemyChecker} = require('./checkIfCheckerCanTakeChecker');
 
 playerCanTakeEnemyCheckers = (currentPlayer, waitingPlayer) => {

@@ -1,4 +1,4 @@
-const Player = require('../Classes/Player');
+const Player = require('../classes/Player');
 
 checkIfCellIsEmpty = (firstPlayer, secondPlayer, x, y) => {
     if (x >= 1 && x <= 8 && y >= 1 && y <= 8

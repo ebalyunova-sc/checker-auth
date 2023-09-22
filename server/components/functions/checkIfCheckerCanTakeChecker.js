@@ -1,4 +1,4 @@
-const Player = require('../Classes/Player');
+const Player = require('../classes/Player');
 const {checkIfCellIsEmpty} = require('./checkIfCellIsEmpty');
 
 checkerCanTakeEnemyChecker = (currentPlayer, waitingPlayer, x, y) => {

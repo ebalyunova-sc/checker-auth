@@ -58,6 +58,7 @@ const GamePage = () => {
     }
 
     const choiceCellsForMove = (x, y, cellIsEmpty, color) => {
+        store.checkAuth();
         if (cellIsEmpty === false) 
         {
             if (game.currentPlayer === 'white player')
@@ -85,7 +86,6 @@ const GamePage = () => {
     }
 
     const choiceCellWithChecker = (currentPlayersCheckers, waitingPlayersCheckers, x, y) => {
-        console.log(multipleTake);
         if (playerCanTakeEnemyCheckers(currentPlayersCheckers, waitingPlayersCheckers)
             && multipleTake === false)
         {

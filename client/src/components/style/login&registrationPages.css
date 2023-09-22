@@ -9,8 +9,8 @@
     width: 100%;
     height: 100%;
 
-    background: center / contain linear-gradient(130deg, rgba(252, 189, 153, 0.6), rgba(127, 209, 186, 0.6));
-    filter: blur(15px);
+    background: linear-gradient(40deg, #FFCFA8, #96E4E1);
+    filter: blur(25px);
 }
 
 form.modalWindow {
@@ -20,7 +20,7 @@ form.modalWindow {
 
     width: 380px;
 
-    background-color: whitesmoke;
+    background-color: white;
     border-radius: 10px;
 }
 
@@ -48,9 +48,9 @@ form.login {
     width: 260px;
     height: 60px;
 
-    background-color: whitesmoke;
+    background-color: white;
 
-    border: 2px solid rgba(127, 209, 186, 0.6);
+    border: 2px solid #96E4E1;
     border-radius: 5px;
 
     text-indent: 10px;
@@ -90,7 +90,7 @@ input :focus {
     font-family: system-ui;
     font-size: 15px;
     font-weight: bold;
-    color: whitesmoke;
+    color: white;
 }
 
 .registrationLink {
